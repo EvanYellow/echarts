@@ -228,20 +228,33 @@ define(function (require) {
                     tickCoord,
                     opt.labelOffset + opt.labelDirection * labelMargin
                 ];
-
-                var textEl = new graphic.Text({
-                    style: {
-                        text: labels[i],
-                        textAlign: itemTextStyleModel.get('align', true) || labelLayout.textAlign,
-                        textBaseline: itemTextStyleModel.get('baseline', true) || labelLayout.textBaseline,
-                        textFont: itemTextStyleModel.getFont(),
-                        fill: itemTextStyleModel.getTextColor()
-                    },
-                    position: pos,
-                    rotation: labelLayout.rotation,
-                    silent: true,
-                    z2: 10
-                });
+                var textEl;
+                var judge = labels[i];
+                if(judge.indexOf(".png") == -1 && judge.indexOf(".jpg") == -1) {
+                    textEl = new graphic.Text({
+                        style: {
+                            text: labels[i],
+                            textAlign: itemTextStyleModel.get('align', true) || labelLayout.textAlign,
+                            textBaseline: itemTextStyleModel.get('baseline', true) || labelLayout.textBaseline,
+                            textFont: itemTextStyleModel.getFont(),
+                            fill: itemTextStyleModel.getTextColor()
+                        },
+                        position: pos,
+                        rotation: labelLayout.rotation,
+                        silent: true,
+                        z2: 10
+                    });
+                }else{
+                    pos[0] = pos[0] - textStyleModel.getWidth() / 2;
+                    textEl = new graphic.Image({
+                        style: {
+                            image: labels[i],
+                            width: textStyleModel.getWidth(),
+                            height: textStyleModel.getHeiht()
+                        },
+                        position: pos
+                    });
+                }
                 textEls.push(textEl);
                 this.group.add(textEl);
             }

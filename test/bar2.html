@@ -59,7 +59,20 @@
                     xAxis : [
                         {
                             type : 'category',
-                            data : ['周一','周二','周三','周四','周五','周六','周日']
+                            data : ['周一','周二','周三','周四','周五','周六','周日'],
+                            axisLabel: {
+                                formatter: function(value, index) {
+                                    if(value === "周一"){
+                                        return 'http://www.highcharts.com/demo/gfx/sun.png';
+                                    }else{
+                                        return value;
+                                    }
+                                },
+                                textStyle: {
+                                    width: 50,
+                                    heigth: 50
+                                }
+                            }
                         }
                     ],
                     yAxis : [

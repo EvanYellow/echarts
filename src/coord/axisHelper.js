@@ -117,7 +117,11 @@ define(function (require) {
     axisHelper.getAxisLabelInterval = function (tickCoords, labels, font, isAxisHorizontal) {
         // FIXME
         // 不同角的axis和label，不只是horizontal和vertical.
-
+        if(labels.length){
+            if(labels[0].indexOf(".png") != -1 || labels[0].indexOf(".jpg") != -1){
+                return 0;
+            }
+        }
         var textSpaceTakenRect;
         var autoLabelInterval = 0;
         var accumulatedLabelInterval = 0;

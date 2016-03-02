@@ -17,6 +17,14 @@ define(function (require) {
                 || (ecModel && ecModel.get('textStyle.color'));
         },
 
+        getWidth: function () {
+            return this.getShallow('width') || 30;
+        },
+
+        getHeiht: function () {
+            return this.getShallow('heigth') || 30;
+        },
+
         /**
          * Create font string from fontStyle, fontWeight, fontSize, fontFamily
          * @return {string}
