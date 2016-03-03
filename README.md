@@ -31,6 +31,7 @@ ECharts is a free, powerful charting and visualization library offering an easy 
 	 }
 	],
 	```
+	
 ## 图例增加显示图片功能
 
 + 配置如下，通过`formatter`函数返回图片链接，可以相对路径/绝对路径，可以通过``imageWidth``, ``imageHeight``参数控制图片宽高
