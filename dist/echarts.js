@@ -29102,9 +29102,11 @@ define('echarts/component/legend/LegendView',['require','zrender/core/util','../
             }else{
                 var imageWidth = legendModel.get('imageWidth') || 30;
                 var imageHeight = legendModel.get('imageHeight') || 30;
+                var nameArr = name.split("|");
                 text = new graphic.Image({
                     style: {
-                        image: name,
+                        image: nameArr[0],
+                        text: nameArr.length > 1 && nameArr[1] || null,
                         x: textX,
                         y: -imageHeight / 2 * 0.8,
                         width: imageWidth,
