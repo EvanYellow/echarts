@@ -8,7 +8,7 @@ ECharts is a free, powerful charting and visualization library offering an easy 
 
 ## X轴的Label增加显示图片功能
 
-+ 配置如下，通过`formatter`函数返回图片链接，可以相对路径/绝对路径，可以通过``textStyle``的``width``, ``height``参数控制图片宽高
++ 配置如下，通过`formatter`函数返回图片链接(后面加上|``text``可以在图片上面加文字)，可以相对路径/绝对路径，可以通过``textStyle``的``width``, ``height``参数控制图片宽高
 
 	```javascript
 	xAxis : [
@@ -18,7 +18,7 @@ ECharts is a free, powerful charting and visualization library offering an easy 
 	     axisLabel: {
 	         formatter: function(value, index) {
 	             if(value === "周一"){
-	                 return 'http://www.highcharts.com/demo/gfx/sun.png';
+	                 return 'http://www.highcharts.com/demo/gfx/sun.png|太阳';
 	             }else{
 	                 return value;
 	             }
