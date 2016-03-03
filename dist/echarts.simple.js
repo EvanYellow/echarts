@@ -2121,6 +2121,14 @@ define('echarts/model/mixin/textStyle',['require','zrender/contain/text'],functi
                 || (ecModel && ecModel.get('textStyle.color'));
         },
 
+        getWidth: function () {
+            return this.getShallow('width') || 30;
+        },
+
+        getHeiht: function () {
+            return this.getShallow('heigth') || 30;
+        },
+
         /**
          * Create font string from fontStyle, fontWeight, fontSize, fontFamily
          * @return {string}
@@ -2154,6 +2162,7 @@ define('echarts/model/mixin/textStyle',['require','zrender/contain/text'],functi
         }
     };
 });
+
 define('echarts/model/mixin/itemStyle',['require','./makeStyleMapper'],function (require) {
     return {
         getItemStyle: require('./makeStyleMapper')(
@@ -21734,7 +21743,11 @@ define('echarts/coord/axisHelper',['require','../scale/Ordinal','../scale/Interv
     axisHelper.getAxisLabelInterval = function (tickCoords, labels, font, isAxisHorizontal) {
         // FIXME
         // 不同角的axis和label，不只是horizontal和vertical.
-
+        if(labels.length){
+            if(labels[0].indexOf(".png") != -1 || labels[0].indexOf(".jpg") != -1){
+                return 0;
+            }
+        }
         var textSpaceTakenRect;
         var autoLabelInterval = 0;
         var accumulatedLabelInterval = 0;
@@ -21803,6 +21816,7 @@ define('echarts/coord/axisHelper',['require','../scale/Ordinal','../scale/Interv
 
     return axisHelper;
 });
+
 /**
  * Cartesian coordinate system
  * @module  echarts/coord/Cartesian
@@ -24963,20 +24977,33 @@ define('echarts/component/axis/AxisBuilder',['require','zrender/core/util','../.
                     tickCoord,
                     opt.labelOffset + opt.labelDirection * labelMargin
                 ];
-
-                var textEl = new graphic.Text({
-                    style: {
-                        text: labels[i],
-                        textAlign: itemTextStyleModel.get('align', true) || labelLayout.textAlign,
-                        textBaseline: itemTextStyleModel.get('baseline', true) || labelLayout.textBaseline,
-                        textFont: itemTextStyleModel.getFont(),
-                        fill: itemTextStyleModel.getTextColor()
-                    },
-                    position: pos,
-                    rotation: labelLayout.rotation,
-                    silent: true,
-                    z2: 10
-                });
+                var textEl;
+                var judge = labels[i];
+                if(judge.indexOf(".png") == -1 && judge.indexOf(".jpg") == -1) {
+                    textEl = new graphic.Text({
+                        style: {
+                            text: labels[i],
+                            textAlign: itemTextStyleModel.get('align', true) || labelLayout.textAlign,
+                            textBaseline: itemTextStyleModel.get('baseline', true) || labelLayout.textBaseline,
+                            textFont: itemTextStyleModel.getFont(),
+                            fill: itemTextStyleModel.getTextColor()
+                        },
+                        position: pos,
+                        rotation: labelLayout.rotation,
+                        silent: true,
+                        z2: 10
+                    });
+                }else{
+                    pos[0] = pos[0] - textStyleModel.getWidth() / 2;
+                    textEl = new graphic.Image({
+                        style: {
+                            image: labels[i],
+                            width: textStyleModel.getWidth(),
+                            height: textStyleModel.getHeiht()
+                        },
+                        position: pos
+                    });
+                }
                 textEls.push(textEl);
                 this.group.add(textEl);
             }
@@ -25173,6 +25200,7 @@ define('echarts/component/axis/AxisBuilder',['require','zrender/core/util','../.
     return AxisBuilder;
 
 });
+
 define('echarts/component/axis/AxisView',['require','zrender/core/util','../../util/graphic','./AxisBuilder','../../echarts'],function (require) {
 
     var zrUtil = require('zrender/core/util');

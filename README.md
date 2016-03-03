@@ -6,6 +6,32 @@
 
 ECharts is a free, powerful charting and visualization library offering an easy way of adding intuitive, interactive, and highly customizable charts to your commercial products. It is written in pure JavaScript and based on <a href="https://github.com/ecomfe/zrender">zrender</a>, which is a whole new lightweight canvas library.
 
+## X轴的Label增加显示图片功能
+
++ 配置如下，通过`formatter`函数返回图片链接，可以相对路径/绝对路径，可以通过``textStyle``的``width``, ``height``参数控制图片宽高
+
+	```javascript
+	xAxis : [
+	 {
+	     type : 'category',
+	     data : ['周一','周二','周三','周四','周五','周六','周日'],
+	     axisLabel: {
+	         formatter: function(value, index) {
+	             if(value === "周一"){
+	                 return 'http://www.highcharts.com/demo/gfx/sun.png';
+	             }else{
+	                 return value;
+	             }
+	         },
+	         textStyle: {
+	             width: 50,
+	             heigth: 50
+	         }
+	     }
+	 }
+	],
+	```
+
 ## Get ECharts
 
 + Download on [echarts.baidu.com](http://echarts.baidu.com/download.html)
