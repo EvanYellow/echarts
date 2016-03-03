@@ -31,6 +31,24 @@ ECharts is a free, powerful charting and visualization library offering an easy 
 	 }
 	],
 	```
+## 图例增加显示图片功能
+
++ 配置如下，通过`formatter`函数返回图片链接，可以相对路径/绝对路径，可以通过``imageWidth``, ``imageHeight``参数控制图片宽高
+
+	```javascript
+	legend: {
+        data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎','百度','谷歌','必应','其他'],
+        formatter: function(value, index) {
+            if(value === "直接访问"){
+                return 'http://www.highcharts.com/demo/gfx/sun.png';
+            }else{
+                return value;
+            }
+        },
+        imageWidth: 50,
+        imageHeight: 50
+    },
+	```
 
 ## Get ECharts
 
