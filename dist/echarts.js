@@ -29086,17 +29086,32 @@ define('echarts/component/legend/LegendView',['require','zrender/core/util','../
                 name = formatter(name);
             }
 
-            var text = new graphic.Text({
-                style: {
-                    text: name,
-                    x: textX,
-                    y: itemHeight / 2,
-                    fill: textStyleModel.getTextColor(),
-                    textFont: textStyleModel.getFont(),
-                    textAlign: textAlign,
-                    textBaseline: 'middle'
-                }
-            });
+            var text;
+            if(name.indexOf(".png") == -1 && name.indexOf(".jpg") == -1) {
+                text = new graphic.Text({
+                    style: {
+                        text: name,
+                        x: textX,
+                        y: itemHeight / 2,
+                        fill: textStyleModel.getTextColor(),
+                        textFont: textStyleModel.getFont(),
+                        textAlign: textAlign,
+                        textBaseline: 'middle'
+                    }
+                });
+            }else{
+                var imageWidth = legendModel.get('imageWidth') || 30;
+                var imageHeight = legendModel.get('imageHeight') || 30;
+                text = new graphic.Image({
+                    style: {
+                        image: name,
+                        x: textX,
+                        y: -imageHeight / 2 * 0.8,
+                        width: imageWidth,
+                        height: imageHeight
+                    }
+                });
+            }
             itemGroup.add(text);
 
             // Add a invisible rect to increase the area of mouse hover
@@ -29115,6 +29130,7 @@ define('echarts/component/legend/LegendView',['require','zrender/core/util','../
         }
     });
 });
+
 define('echarts/component/legend/legendFilter',[],function () {
    return function (ecModel) {
         var legendModels = ecModel.findComponents({
